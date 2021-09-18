@@ -37,15 +37,25 @@ public class Main {
         }
         double dis = StringUtils.getJaroWinklerDistance(Charter1, Charter2);
         System.out.println(dis);
-        try (FileWriter fr = new FileWriter(f3)) {
-            // 以字符流的形式把数据写入到文件中
+        byte[] buff=new byte[]{};
+        try(FileOutputStream fo=new FileOutputStream(f3,true)){
             BigDecimal disB=new BigDecimal(dis*100);
             String data= new StringBuilder().append(String.valueOf(disB.setScale(2,RoundingMode.HALF_UP))).append("%").toString();
-            char[] cs = data.toCharArray();
-            fr.write(cs);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+            buff=data.getBytes();
+            fo.write(buff);
+            fo.flush();
+        }catch (IOException e){
             e.printStackTrace();
         }
+//        try (FileWriter fr = new FileWriter(f3)) {
+//            // 以字符流的形式把数据写入到文件中
+//            BigDecimal disB=new BigDecimal(dis*100);
+//            String data= new StringBuilder().append(String.valueOf(disB.setScale(2,RoundingMode.HALF_UP))).append("%").toString();
+//            char[] cs = data.toCharArray();
+//            fr.write(cs);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
     }
 }
